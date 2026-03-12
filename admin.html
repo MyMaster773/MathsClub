@@ -111,7 +111,6 @@
         .nav-item i { width: 20px; text-align: center; }
         .sidebar-footer { margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; }
         
-        /* Logout specific styling */
         .logout-btn { color: #fca5a5; }
         .logout-btn:hover { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
 
@@ -225,7 +224,6 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
-        // ADDED: Firebase Auth Imports
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -239,12 +237,11 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const auth = getAuth(app); // Initialize Auth
+        const auth = getAuth(app); 
 
         let appData = { activities: [], events: [], excoom: [] };
         let currentView = 'activities';
 
-        // --- SECURITY: XSS Sanitization Function ---
         function escapeHTML(str) {
             if (str === null || str === undefined) return '';
             return String(str)
@@ -255,28 +252,21 @@
                 .replace(/'/g, "&#039;");
         }
 
-        // --- AUTHENTICATION LOGIC ---
-
-        // Listen for Auth State Changes
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Securely logged in
                 document.getElementById('login-overlay').style.display = 'none';
                 document.getElementById('admin-content').style.display = 'flex';
                 loadData();
             } else {
-                // Logged out
                 document.getElementById('login-overlay').style.display = 'flex';
                 document.getElementById('admin-content').style.display = 'none';
                 
-                // Reset login button if it was in loading state
                 const btn = document.getElementById('login-submit-btn');
                 btn.innerText = "Sign In";
                 btn.disabled = false;
             }
         });
 
-        // Handle Login Submission
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('admin-user').value;
@@ -287,7 +277,6 @@
             btn.disabled = true;
 
             try {
-                // Replaces the insecure /api/auth fetch
                 await signInWithEmailAndPassword(auth, email, pass);
                 document.getElementById('login-form').reset();
             } catch (err) {
@@ -297,7 +286,6 @@
             }
         });
 
-        // Expose logout to window scope
         window.logoutAdmin = async () => {
             try {
                 await signOut(auth);
@@ -305,8 +293,6 @@
                 console.error("Logout Error", error);
             }
         };
-
-        // --- DATABASE LOGIC ---
 
         async function loadData() {
             try {
@@ -317,7 +303,7 @@
                 }
                 renderCurrentView();
             } catch (error) {
-                console.error("Error loading data. Check Firestore rules.", error);
+                console.error("Error loading data.", error);
             }
         }
 
@@ -328,12 +314,11 @@
             const id = document.getElementById('item-id').value;
             const newItem = {};
             
-            // SECURITY/INTEGRITY FIX: Handle data types properly
             formData.forEach((v, k) => {
                 if (k === 'day' || k === 'year') {
-                    newItem[k] = parseInt(v, 10) || 0; // Ensure numbers are saved as numbers
+                    newItem[k] = parseInt(v, 10) || 0; 
                 } else {
-                    newItem[k] = v; // Save string as is, we sanitize on output
+                    newItem[k] = v; 
                 }
             });
 
@@ -358,10 +343,7 @@
             }
         }
 
-        // --- UI RENDERING LOGIC ---
-
         function renderCurrentView() {
-            // SECURITY FIX: Every variable injected into HTML is now wrapped in escapeHTML()
             const bodies = {
                 activities: () => appData.activities.map(i => `<tr>
                     <td><i class="fa-solid ${escapeHTML(i.icon)}"></i></td>
@@ -403,7 +385,6 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(`view-${view}`).classList.add('active');
             
-            // Update page title dynamically
             const titles = { 'activities': 'Activities Management', 'events': 'Events Management', 'excoom': 'Committee Management' };
             document.getElementById('page-title').innerText = titles[view];
             
@@ -418,7 +399,6 @@
             document.getElementById('item-id').value = obj ? obj.id : '';
             document.getElementById('modal-title').innerText = obj ? 'Edit Item' : 'Add Item';
             
-            // SECURITY FIX: escapeHTML added to input values so quotes don't break the input tags
             if(currentView === 'activities') {
                 fields.innerHTML = `
                     <div class="form-group"><label>Title</label><input name="title" value="${escapeHTML(obj?obj.title:'')}" required></div>
