@@ -52,7 +52,6 @@
             list-style: none;
         }
 
-        /* Utility Classes */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -109,7 +108,6 @@
             color: var(--primary);
         }
 
-        /* Header */
         header {
             background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -174,7 +172,6 @@
             font-size: 1.5rem;
         }
 
-        /* Hero Section */
         #hero {
             height: 100vh;
             background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
@@ -223,7 +220,6 @@
             gap: 1rem;
         }
 
-        /* About Section */
         #about {
             background-color: white;
         }
@@ -273,7 +269,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Activities Section */
         #activities {
             background-color: var(--light);
         }
@@ -304,7 +299,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Events Section */
         #events {
             background-color: white;
         }
@@ -354,7 +348,6 @@
             font-size: 0.9rem;
         }
 
-        /* Excoom Section */
         #excoom {
             background-color: var(--primary);
             color: white;
@@ -409,7 +402,6 @@
             text-transform: uppercase;
         }
 
-        /* Contact Section */
         #contact {
             background-color: white;
         }
@@ -430,6 +422,8 @@
             background: var(--light);
             border-radius: 12px;
             transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
         }
 
         .contact-info-item:hover {
@@ -493,7 +487,6 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        /* Footer */
         footer {
             background-color: var(--primary);
             color: white;
@@ -502,7 +495,6 @@
             border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* Animation Classes */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -514,7 +506,6 @@
             transform: translateY(0);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 position: absolute;
@@ -649,27 +640,27 @@
 
             <div class="contact-wrapper">
                 <div class="contact-info reveal">
-                    <div class="contact-info-item">
+                    <a href="mailto:asietmathematicsclub1234@gmail.com" class="contact-info-item">
                         <div class="contact-icon-box"><i class="fa-regular fa-envelope"></i></div>
                         <div class="contact-text">
                             <h4>Email Us</h4>
                             <p>asietmathematicsclub1234@gmail.com</p>
                         </div>
-                    </div>
-                    <div class="contact-info-item">
+                    </a>
+                    <a href="tel:+917736858318" class="contact-info-item">
                         <div class="contact-icon-box"><i class="fa-solid fa-phone"></i></div>
                         <div class="contact-text">
                             <h4>Call Us</h4>
                             <p>+91 7736858318</p>
                         </div>
-                    </div>
-                    <div class="contact-info-item">
+                    </a>
+                    <a href="https://www.instagram.com/mathematicsclub_asiet/" target="_blank" class="contact-info-item">
                         <div class="contact-icon-box"><i class="fa-brands fa-instagram"></i></div>
                         <div class="contact-text">
                             <h4>Follow Us</h4>
-                            <p>@mathsclub_asiet</p>
+                            <p>@mathematicsclub_asiet</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <form class="contact-form reveal" id="contactForm">
@@ -691,7 +682,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, query, limit } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD5McbOsegxh9wyx3J99-tPxHWIo2dSNEM",
@@ -705,7 +696,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- SECURITY: XSS Sanitization Function ---
         function escapeHTML(str) {
             if (str === null || str === undefined) return '';
             return String(str)
@@ -718,8 +708,10 @@
 
         async function fetchAndRenderPublicData() {
             try {
-                // Fetch and Render Activities
-                const activitiesSnap = await getDocs(collection(db, 'activities'));
+                const activitiesRef = collection(db, 'activities');
+                const activitiesQuery = query(activitiesRef, limit(6));
+                const activitiesSnap = await getDocs(activitiesQuery);
+                
                 let activitiesHTML = '';
                 activitiesSnap.forEach(doc => {
                     const item = doc.data();
@@ -732,8 +724,10 @@
                 });
                 document.getElementById('activities-container').innerHTML = activitiesHTML || '<p>No activities found.</p>';
 
-                // Fetch and Render Events
-                const eventsSnap = await getDocs(collection(db, 'events'));
+                const eventsRef = collection(db, 'events');
+                const eventsQuery = query(eventsRef, limit(4));
+                const eventsSnap = await getDocs(eventsQuery);
+                
                 let eventsHTML = '';
                 eventsSnap.forEach(doc => {
                     const item = doc.data();
@@ -752,8 +746,10 @@
                 });
                 document.getElementById('events-container').innerHTML = eventsHTML || '<p>No upcoming events.</p>';
 
-                // Fetch and Render Excoom
-                const excoomSnap = await getDocs(collection(db, 'excoom'));
+                const excoomRef = collection(db, 'excoom');
+                const excoomQuery = query(excoomRef, limit(15));
+                const excoomSnap = await getDocs(excoomQuery);
+                
                 let excoomHTML = '';
                 excoomSnap.forEach(doc => {
                     const item = doc.data();
@@ -776,9 +772,6 @@
     </script>
 
     <script>
-        // --- UI INTERACTIONS ---
-        
-        // Mobile Menu Toggle
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
         const links = document.querySelectorAll('.nav-link');
@@ -787,14 +780,12 @@
             navLinks.classList.toggle('active');
         });
 
-        // Close mobile menu when a link is clicked
         links.forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
             });
         });
 
-        // Smooth Scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -804,7 +795,6 @@
             });
         });
 
-        // Scroll Animation (Intersection Observer)
         const revealElements = document.querySelectorAll('.reveal');
 
         const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -823,7 +813,6 @@
             revealObserver.observe(el);
         });
 
-        // Form Submission Mock
         const contactForm = document.getElementById('contactForm');
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -835,7 +824,7 @@
             
             setTimeout(() => {
                 btn.innerText = 'Message Sent!';
-                btn.style.backgroundColor = '#10b981'; // Green success color
+                btn.style.backgroundColor = '#10b981';
                 contactForm.reset();
                 
                 setTimeout(() => {
