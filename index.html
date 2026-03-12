@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Math Club | Sigma Society</title>
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fontsource.org/files/inter/400.css">
+    <link rel="stylesheet" href="https://fontsource.org/files/inter/600.css">
+    <link rel="stylesheet" href="https://fontsource.org/files/playfair-display/700.css">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #3b82f6;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --surface: #ffffff;
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Playfair Display', serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--primary);
+            background-color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            border-color: var(--secondary);
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: var(--primary);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            padding-top: 80px;
+        }
+
+        .hero-bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 30%, var(--secondary) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, var(--accent) 0%, transparent 20%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* About Section */
+        #about {
+            background-color: white;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            background-color: var(--light);
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .math-shape {
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--secondary);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--secondary);
+        }
+
+        .math-shape::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border: 2px dashed var(--accent);
+            border-radius: 50%;
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Activities Section */
+        #activities {
+            background-color: var(--light);
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .activity-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .activity-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Events Section */
+        #events {
+            background-color: white;
+        }
+
+        .event-item {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            transition: var(--transition);
+            align-items: center;
+        }
+
+        .event-item:hover {
+            background-color: var(--light);
+        }
+
+        .event-date {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .event-date span {
+            display: block;
+            font-weight: 700;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .event-month {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-details h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .event-details p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Excoom Section */
+        #excoom {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        #excoom .section-title {
+            color: white;
+        }
+
+        #excoom .section-subtitle {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .excoom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .member-card {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+        }
+
+        .member-card:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .member-role {
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        /* Contact Section - RESTORED OLD STYLE WITH NEW CONTENT */
+        #contact {
+            background-color: white;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .contact-info-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon-box {
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .contact-text h4 {
+            font-family: var(--font-main);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .contact-text p {
+            color: var(--gray);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .contact-form {
+            background: var(--light);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                gap: 1.5rem;
+                transform: translateY(-150%);
+                transition: var(--transition);
+                box-shadow: 0 10px 10px rgba(0,0,0,0.05);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-grid,
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <i class="fa-solid fa-square-root-variable"></i>
+                    Sigma Society
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#activities" class="nav-link">Activities</a></li>
+                    <li><a href="#events" class="nav-link">Events</a></li>
+                    <li><a href="#excoom" class="nav-link">Excoom</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-bg-pattern"></div>
+        <div class="container hero-content reveal">
+            <h1>Where Numbers <br>Meet <span style="color: var(--accent);">Curiosity</span></h1>
+            <p>Join the premier mathematics club at our college. From solving complex equations to exploring real-world applications, we make math accessible and fun.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn">Join Us</a>
+                <a href="#events" class="btn btn-outline">Upcoming Events</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text reveal">
+                    <h2 class="section-title" style="text-align: left;">Who We Are</h2>
+                    <p style="margin-bottom: 1rem;">The Sigma Society is a student-led organization dedicated to fostering a love for mathematics across all disciplines. We believe that math is not just a subject, but a language that describes the universe.</p>
+                    <p>Whether you are a math major or just curious about the logic behind the world, our doors are open. We provide a supportive community for peer tutoring, research collaboration, and social gatherings.</p>
+                    <ul style="margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <li><i class="fa-solid fa-check" style="color: var(--secondary); margin-right: 8px;"></i> Peer Tutoring</li>
+                        <li><i class="fa-solid fa-check" style="color: var(--secondary); margin-right: 8px;"></i> Research Seminars</li>
+                        <li><i class="fa-solid fa-check" style="color: var(--secondary); margin-right: 8px;"></i> Math Competitions</li>
+                        <li><i class="fa-solid fa-check" style="color: var(--secondary); margin-right: 8px;"></i> Social Mixers</li>
+                    </ul>
+                </div>
+                <div class="about-image reveal">
+                    <div class="math-shape">
+                        <i class="fa-solid fa-infinity"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section id="activities" class="section-padding">
+        <div class="container">
+            <h2 class="section-title reveal">Our Activities</h2>
+            <p class="section-subtitle reveal">We keep things interesting with a mix of academic and social events.</p>
+            
+            <div class="activities-grid" id="activities-container">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="section-padding">
+        <div class="container">
+            <h2 class="section-title reveal">Upcoming Events</h2>
+            <p class="section-subtitle reveal">Mark your calendars. Don't miss out on the action.</p>
+
+            <div class="events-list" id="events-container">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Excoom Section -->
+    <section id="excoom" class="section-padding">
+        <div class="container">
+            <h2 class="section-title reveal">Meet the Excoom</h2>
+            <p class="section-subtitle reveal">The Executive Committee leading the charge this year.</p>
+
+            <div class="excoom-grid" id="excoom-container">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <h2 class="section-title reveal">Get In Touch</h2>
+            <p class="section-subtitle reveal">Have questions or want to join? Reach out to us.</p>
+
+            <div class="contact-wrapper">
+                <!-- Left Side: Contact Info Cards -->
+                <div class="contact-info reveal">
+                    
+                    <div class="contact-info-item">
+                        <div class="contact-icon-box">
+                            <i class="fa-regular fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Email Us</h4>
+                            <p>asietmathematicsclub1234@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-icon-box">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Call Us</h4>
+                            <p>+91 7736858318</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-icon-box">
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Follow Us</h4>
+                            <p>@mathsclub_asiet</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Side: Form -->
+                <form class="contact-form reveal" id="contactForm">
+                    <h3 style="margin-bottom: 1.5rem; font-family: var(--font-main);">Send a Message</h3>
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="5" placeholder="Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Sigma Society Math Club. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- DATA FETCHING ---
+        const defaultData = {
+            activities: [
+                { id: 1, title: 'Tutorial Sessions', desc: 'Weekly drop-in sessions for calculus help.', icon: 'fa-chalkboard-user' },
+                { id: 2, title: 'Math Olympiad', desc: 'Preparation for regional competitions.', icon: 'fa-trophy' },
+                { id: 3, title: 'Pi Day Socials', desc: 'Celebrating 3.14 with pie and trivia.', icon: 'fa-mug-hot' }
+            ],
+            events: [
+                { id: 1, month: 'Oct', day: '15', title: 'Guest Lecture: AI & Math', location: 'Room 304, 4:00 PM', desc: 'Dr. Sarah Jenkins discusses neural networks.' },
+                { id: 2, month: 'Nov', day: '02', title: 'Mid-Semester Math Jam', location: 'Student Lounge, 6:00 PM', desc: 'Collaborative problem solving.' }
+            ],
+            excoom: [
+                { id: 1, name: 'John Doe', role: 'President', initials: 'JD', year: 'Applied Math, Year 3' },
+                { id: 2, name: 'Alice Smith', role: 'Vice President', initials: 'AS', year: 'Statistics, Year 3' },
+                { id: 3, name: 'Michael Johnson', role: 'Secretary', initials: 'MJ', year: 'CS, Year 2' }
+            ]
+        };
+
+        // Load data from LocalStorage or use defaults
+        const storedData = localStorage.getItem('sigmaClubData');
+        const appData = storedData ? JSON.parse(storedData) : defaultData;
+
+        // --- RENDER FUNCTIONS ---
+        function renderActivities() {
+            const container = document.getElementById('activities-container');
+            container.innerHTML = appData.activities.map(item => `
+                <div class="activity-card reveal">
+                    <i class="fa-solid ${item.icon} activity-icon"></i>
+                    <h3>${item.title}</h3>
+                    <p style="color: var(--gray); margin-top: 1rem;">${item.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderEvents() {
+            const container = document.getElementById('events-container');
+            container.innerHTML = appData.events.map(item => `
+                <div class="event-item reveal">
+                    <div class="event-date">
+                        <span class="event-month">${item.month}</span>
+                        <span>${item.day}</span>
+                    </div>
+                    <div class="event-details">
+                        <h3>${item.title}</h3>
+                        <p>${item.desc}</p>
+                        <p style="margin-top: 5px; font-size: 0.8rem; color: var(--secondary);">${item.location}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderExcoom() {
+            const container = document.getElementById('excoom-container');
+            container.innerHTML = appData.excoom.map(item => `
+                <div class="member-card reveal">
+                    <div class="member-avatar">${item.initials}</div>
+                    <div class="member-role">${item.role}</div>
+                    <h3>${item.name}</h3>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;">${item.year}</p>
+                </div>
+            `).join('');
+        }
+
+        // Initialize Content
+        renderActivities();
+        renderEvents();
+        renderExcoom();
+
+        // --- UI INTERACTIONS ---
+        
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const links = document.querySelectorAll('.nav-link');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when a link is clicked
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll Animation (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.15
+        });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Form Submission Mock
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = contactForm.querySelector('button');
+            const originalText = btn.innerText;
+            
+            btn.innerText = 'Sending...';
+            btn.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                btn.innerText = 'Message Sent!';
+                btn.style.backgroundColor = '#10b981'; // Green success color
+                contactForm.reset();
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.backgroundColor = '';
+                    btn.style.opacity = '1';
+                }, 3000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
+
