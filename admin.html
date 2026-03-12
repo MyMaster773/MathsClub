@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Sigma Society</title>
     
-    <!-- Fonts -->
     <link rel="stylesheet" href="https://fontsource.org/files/inter/400.css">
     <link rel="stylesheet" href="https://fontsource.org/files/inter/600.css">
     
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -243,7 +241,6 @@
 </head>
 <body>
 
-    <!-- Sidebar -->
     <aside id="sidebar">
         <div class="brand">
             <i class="fa-solid fa-shapes"></i> Admin Panel
@@ -260,19 +257,12 @@
             </div>
         </nav>
         <div class="sidebar-footer">
-            <div class="nav-item" onclick="resetData()">
-                <i class="fa-solid fa-rotate-right"></i> Reset Data
-            </div>
-            <div class="nav-item" onclick="exportData()">
-                <i class="fa-solid fa-download"></i> Export JSON
-            </div>
             <a href="index.html" class="nav-item" target="_blank">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> View Site
             </a>
         </div>
     </aside>
 
-    <!-- Main Content -->
     <main>
         <header>
             <div style="display: flex; align-items: center;">
@@ -284,7 +274,6 @@
             </button>
         </header>
 
-        <!-- Activities View -->
         <section id="view-activities" class="view-section active">
             <div class="card">
                 <table class="data-table">
@@ -297,13 +286,11 @@
                         </tr>
                     </thead>
                     <tbody id="activities-table-body">
-                        <!-- JS renders here -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- Events View -->
         <section id="view-events" class="view-section">
             <div class="card">
                 <table class="data-table">
@@ -316,13 +303,11 @@
                         </tr>
                     </thead>
                     <tbody id="events-table-body">
-                        <!-- JS renders here -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- Excoom View -->
         <section id="view-excoom" class="view-section">
             <div class="card">
                 <table class="data-table">
@@ -335,14 +320,12 @@
                         </tr>
                     </thead>
                     <tbody id="excoom-table-body">
-                        <!-- JS renders here -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </section>
     </main>
 
-    <!-- Generic Modal -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal">
             <div class="modal-header">
@@ -353,8 +336,7 @@
                 <input type="hidden" id="item-id">
                 <input type="hidden" id="item-type">
                 <div id="form-fields">
-                    <!-- Dynamic Fields -->
-                </div>
+                    </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -363,82 +345,69 @@
         </div>
     </div>
 
-    <script>
-        // --- Data Management ---
-        const defaultData = {
-            activities: [
-                { id: 1, title: 'Tutorial Sessions', desc: 'Weekly drop-in sessions for calculus help.', icon: 'fa-chalkboard-user' },
-                { id: 2, title: 'Math Olympiad', desc: 'Preparation for regional competitions.', icon: 'fa-trophy' },
-                { id: 3, title: 'Pi Day Socials', desc: 'Celebrating 3.14 with pie and trivia.', icon: 'fa-mug-hot' }
-            ],
-            events: [
-                { id: 1, month: 'Oct', day: '15', title: 'Guest Lecture: AI & Math', location: 'Room 304, 4:00 PM', desc: 'Dr. Sarah Jenkins discusses neural networks.' },
-                { id: 2, month: 'Nov', day: '02', title: 'Mid-Semester Math Jam', location: 'Student Lounge, 6:00 PM', desc: 'Collaborative problem solving.' }
-            ],
-            excoom: [
-                { id: 1, name: 'John Doe', role: 'President', initials: 'JD', year: 'Applied Math, Year 3' },
-                { id: 2, name: 'Alice Smith', role: 'Vice President', initials: 'AS', year: 'Statistics, Year 3' },
-                { id: 3, name: 'Michael Johnson', role: 'Secretary', initials: 'MJ', year: 'CS, Year 2' }
-            ]
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        // Your specific Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD5McbOsegxh9wyx3J99-tPxHWIo2dSNEM",
+            authDomain: "maths-club-12cdb.firebaseapp.com",
+            projectId: "maths-club-12cdb",
+            storageBucket: "maths-club-12cdb.firebasestorage.app",
+            messagingSenderId: "1019674770194",
+            appId: "1:1019674770194:web:f5ec260b194a25ed2851cb"
         };
 
-        let appData = JSON.parse(localStorage.getItem('sigmaClubData')) || defaultData;
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let appData = { activities: [], events: [], excoom: [] };
         let currentView = 'activities';
 
-        function saveData() {
-            localStorage.setItem('sigmaClubData', JSON.stringify(appData));
+        // 1. Load Data from Firebase
+        async function loadData() {
+            appData = { activities: [], events: [], excoom: [] };
+            const types = ['activities', 'events', 'excoom'];
+            for (const type of types) {
+                const querySnapshot = await getDocs(collection(db, type));
+                querySnapshot.forEach((document) => {
+                    appData[type].push({ id: document.id, ...document.data() });
+                });
+            }
             renderCurrentView();
         }
+        
+        loadData();
 
-        function resetData() {
-            if(confirm('Are you sure? This will wipe all custom changes.')) {
-                appData = JSON.parse(JSON.stringify(defaultData));
-                saveData();
-                alert('Data reset to defaults.');
+        // 2. Add or Edit Data
+        document.getElementById('data-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const type = document.getElementById('item-type').value;
+            const id = document.getElementById('item-id').value;
+            
+            const newItem = {};
+            formData.forEach((value, key) => newItem[key] = value);
+
+            if (id) {
+                await updateDoc(doc(db, type, id), newItem);
+            } else {
+                await addDoc(collection(db, type), newItem);
+            }
+            closeModal();
+            await loadData();
+        });
+
+        // 3. Delete Data
+        async function deleteItem(type, id) {
+            if(confirm('Delete this item?')) {
+                await deleteDoc(doc(db, type, id));
+                await loadData();
             }
         }
 
-        function exportData() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData));
-            const downloadAnchorNode = document.createElement('a');
-            downloadAnchorNode.setAttribute("href", dataStr);
-            downloadAnchorNode.setAttribute("download", "sigma_club_data.json");
-            document.body.appendChild(downloadAnchorNode);
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
-        }
-
-        // --- View Logic ---
-        function switchView(viewName) {
-            currentView = viewName;
-            
-            // Update Sidebar
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active'); // Note: relies on event bubbling/click
-            
-            // Update Title
-            const titles = { 'activities': 'Activities Management', 'events': 'Events Calendar', 'excoom': 'Executive Committee' };
-            document.getElementById('page-title').innerText = titles[viewName];
-
-            // Toggle Sections
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(`view-${viewName}`).classList.add('active');
-
-            renderCurrentView();
-            
-            // Mobile sidebar close
-            if(window.innerWidth <= 768) {
-                document.getElementById('sidebar').classList.remove('open');
-            }
-        }
-
-        function renderCurrentView() {
-            if (currentView === 'activities') renderActivities();
-            if (currentView === 'events') renderEvents();
-            if (currentView === 'excoom') renderExcoom();
-        }
-
-        // --- Renderers ---
+        // --- Render Functions ---
         function renderActivities() {
             const tbody = document.getElementById('activities-table-body');
             tbody.innerHTML = appData.activities.map(item => `
@@ -447,8 +416,8 @@
                     <td style="font-weight: 600;">${item.title}</td>
                     <td style="color: var(--text-light);">${item.desc}</td>
                     <td style="text-align: right;">
-                        <button class="action-btn edit" onclick="editItem('activities', ${item.id})"><i class="fa-solid fa-pen"></i></button>
-                        <button class="action-btn" onclick="deleteItem('activities', ${item.id})"><i class="fa-solid fa-trash"></i></button>
+                        <button class="action-btn edit" onclick="editItem('activities', '${item.id}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="action-btn" onclick="deleteItem('activities', '${item.id}')"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `).join('');
@@ -465,8 +434,8 @@
                     <td style="font-weight: 600;">${item.title}</td>
                     <td style="color: var(--text-light);">${item.location}</td>
                     <td style="text-align: right;">
-                        <button class="action-btn edit" onclick="editItem('events', ${item.id})"><i class="fa-solid fa-pen"></i></button>
-                        <button class="action-btn" onclick="deleteItem('events', ${item.id})"><i class="fa-solid fa-trash"></i></button>
+                        <button class="action-btn edit" onclick="editItem('events', '${item.id}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="action-btn" onclick="deleteItem('events', '${item.id}')"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `).join('');
@@ -485,18 +454,39 @@
                     <td><span class="badge badge-blue">${item.role}</span></td>
                     <td style="color: var(--text-light);">${item.year}</td>
                     <td style="text-align: right;">
-                        <button class="action-btn edit" onclick="editItem('excoom', ${item.id})"><i class="fa-solid fa-pen"></i></button>
-                        <button class="action-btn" onclick="deleteItem('excoom', ${item.id})"><i class="fa-solid fa-trash"></i></button>
+                        <button class="action-btn edit" onclick="editItem('excoom', '${item.id}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="action-btn" onclick="deleteItem('excoom', '${item.id}')"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `).join('');
         }
 
-        // --- CRUD Operations ---
-        function deleteItem(type, id) {
-            if(confirm('Delete this item?')) {
-                appData[type] = appData[type].filter(item => item.id !== id);
-                saveData();
+        function renderCurrentView() {
+            if (currentView === 'activities') renderActivities();
+            if (currentView === 'events') renderEvents();
+            if (currentView === 'excoom') renderExcoom();
+        }
+
+        function switchView(viewName) {
+            currentView = viewName;
+            
+            // Update Sidebar
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            // Update Title
+            const titles = { 'activities': 'Activities Management', 'events': 'Events Calendar', 'excoom': 'Executive Committee' };
+            document.getElementById('page-title').innerText = titles[viewName];
+
+            // Toggle Sections
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(`view-${viewName}`).classList.add('active');
+
+            renderCurrentView();
+            
+            // Mobile sidebar close
+            if(window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
             }
         }
 
@@ -508,7 +498,7 @@
             const idInput = document.getElementById('item-id');
             
             modal.style.display = 'flex';
-            typeInput.value = currentView; // activities, events, excoom
+            typeInput.value = currentView;
             
             let html = '';
             
@@ -591,44 +581,23 @@
             document.getElementById('modal-overlay').style.display = 'none';
         }
 
-        // Form Submission
-        document.getElementById('data-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const type = document.getElementById('item-type').value;
-            const id = document.getElementById('item-id').value;
-            
-            const newItem = {};
-            formData.forEach((value, key) => newItem[key] = value);
-
-            if (id) {
-                // Edit
-                const index = appData[type].findIndex(i => i.id == id);
-                appData[type][index] = { ...appData[type][index], ...newItem };
-            } else {
-                // Add
-                newItem.id = Date.now(); // Simple ID generation
-                appData[type].push(newItem);
-            }
-
-            saveData();
-            closeModal();  
-        });
-
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
         }
-
-        // Initialize
-        renderCurrentView();
 
         // Close modal on outside click
         document.getElementById('modal-overlay').addEventListener('click', (e) => {
             if (e.target === document.getElementById('modal-overlay')) closeModal();
         });
 
+        // Attach functions to window so HTML inline events can access them
+        window.switchView = switchView;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.editItem = editItem;
+        window.deleteItem = deleteItem;
+        window.toggleSidebar = toggleSidebar;
+
     </script>
 </body>
 </html>
-
-//comment this is 

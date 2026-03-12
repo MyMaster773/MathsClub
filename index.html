@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>College Math Club | Sigma Society</title>
     
-    <!-- Fonts -->
     <link rel="stylesheet" href="https://fontsource.org/files/inter/400.css">
     <link rel="stylesheet" href="https://fontsource.org/files/inter/600.css">
     <link rel="stylesheet" href="https://fontsource.org/files/playfair-display/700.css">
     
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -411,7 +409,7 @@
             text-transform: uppercase;
         }
 
-        /* Contact Section - RESTORED OLD STYLE WITH NEW CONTENT */
+        /* Contact Section */
         #contact {
             background-color: white;
         }
@@ -558,7 +556,6 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <div class="container">
             <nav>
@@ -580,7 +577,6 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section id="hero">
         <div class="hero-bg-pattern"></div>
         <div class="container hero-content reveal">
@@ -593,7 +589,6 @@
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="section-padding">
         <div class="container">
             <div class="about-grid">
@@ -617,178 +612,154 @@
         </div>
     </section>
 
-    <!-- Activities Section -->
     <section id="activities" class="section-padding">
         <div class="container">
             <h2 class="section-title reveal">Our Activities</h2>
             <p class="section-subtitle reveal">We keep things interesting with a mix of academic and social events.</p>
             
             <div class="activities-grid" id="activities-container">
-                <!-- Dynamic Content -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- Events Section -->
     <section id="events" class="section-padding">
         <div class="container">
             <h2 class="section-title reveal">Upcoming Events</h2>
             <p class="section-subtitle reveal">Mark your calendars. Don't miss out on the action.</p>
 
             <div class="events-list" id="events-container">
-                <!-- Dynamic Content -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- Excoom Section -->
     <section id="excoom" class="section-padding">
         <div class="container">
             <h2 class="section-title reveal">Meet the Excoom</h2>
             <p class="section-subtitle reveal">The Executive Committee leading the charge this year.</p>
 
             <div class="excoom-grid" id="excoom-container">
-                <!-- Dynamic Content -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="section-padding">
         <div class="container">
             <h2 class="section-title reveal">Get In Touch</h2>
             <p class="section-subtitle reveal">Have questions or want to join? Reach out to us.</p>
 
             <div class="contact-wrapper">
-                <!-- Left Side: Contact Info Cards -->
                 <div class="contact-info reveal">
-                    
                     <div class="contact-info-item">
-                        <div class="contact-icon-box">
-                            <i class="fa-regular fa-envelope"></i>
-                        </div>
+                        <div class="contact-icon-box"><i class="fa-regular fa-envelope"></i></div>
                         <div class="contact-text">
                             <h4>Email Us</h4>
                             <p>asietmathematicsclub1234@gmail.com</p>
                         </div>
                     </div>
-
                     <div class="contact-info-item">
-                        <div class="contact-icon-box">
-                            <i class="fa-solid fa-phone"></i>
-                        </div>
+                        <div class="contact-icon-box"><i class="fa-solid fa-phone"></i></div>
                         <div class="contact-text">
                             <h4>Call Us</h4>
                             <p>+91 7736858318</p>
                         </div>
                     </div>
-
                     <div class="contact-info-item">
-                        <div class="contact-icon-box">
-                            <i class="fa-brands fa-instagram"></i>
-                        </div>
+                        <div class="contact-icon-box"><i class="fa-brands fa-instagram"></i></div>
                         <div class="contact-text">
                             <h4>Follow Us</h4>
                             <p>@mathsclub_asiet</p>
                         </div>
                     </div>
-
                 </div>
 
-                <!-- Right Side: Form -->
                 <form class="contact-form reveal" id="contactForm">
                     <h3 style="margin-bottom: 1.5rem; font-family: var(--font-main);">Send a Message</h3>
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Your Email" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea rows="5" placeholder="Message" required></textarea>
-                    </div>
+                    <div class="form-group"><input type="text" placeholder="Your Name" required></div>
+                    <div class="form-group"><input type="email" placeholder="Your Email" required></div>
+                    <div class="form-group"><textarea rows="5" placeholder="Message" required></textarea></div>
                     <button type="submit" class="btn" style="width: 100%;">Send Message</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; 2023 Sigma Society Math Club. All rights reserved.</p>
         </div>
     </footer>
 
-    <script>
-        // --- DATA FETCHING ---
-        const defaultData = {
-            activities: [
-                { id: 1, title: 'Tutorial Sessions', desc: 'Weekly drop-in sessions for calculus help.', icon: 'fa-chalkboard-user' },
-                { id: 2, title: 'Math Olympiad', desc: 'Preparation for regional competitions.', icon: 'fa-trophy' },
-                { id: 3, title: 'Pi Day Socials', desc: 'Celebrating 3.14 with pie and trivia.', icon: 'fa-mug-hot' }
-            ],
-            events: [
-                { id: 1, month: 'Oct', day: '15', title: 'Guest Lecture: AI & Math', location: 'Room 304, 4:00 PM', desc: 'Dr. Sarah Jenkins discusses neural networks.' },
-                { id: 2, month: 'Nov', day: '02', title: 'Mid-Semester Math Jam', location: 'Student Lounge, 6:00 PM', desc: 'Collaborative problem solving.' }
-            ],
-            excoom: [
-                { id: 1, name: 'John Doe', role: 'President', initials: 'JD', year: 'Applied Math, Year 3' },
-                { id: 2, name: 'Alice Smith', role: 'Vice President', initials: 'AS', year: 'Statistics, Year 3' },
-                { id: 3, name: 'Michael Johnson', role: 'Secretary', initials: 'MJ', year: 'CS, Year 2' }
-            ]
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD5McbOsegxh9wyx3J99-tPxHWIo2dSNEM",
+            authDomain: "maths-club-12cdb.firebaseapp.com",
+            projectId: "maths-club-12cdb",
+            storageBucket: "maths-club-12cdb.firebasestorage.app",
+            messagingSenderId: "1019674770194",
+            appId: "1:1019674770194:web:f5ec260b194a25ed2851cb"
         };
 
-        // Load data from LocalStorage or use defaults
-        const storedData = localStorage.getItem('sigmaClubData');
-        const appData = storedData ? JSON.parse(storedData) : defaultData;
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-        // --- RENDER FUNCTIONS ---
-        function renderActivities() {
-            const container = document.getElementById('activities-container');
-            container.innerHTML = appData.activities.map(item => `
-                <div class="activity-card reveal">
-                    <i class="fa-solid ${item.icon} activity-icon"></i>
-                    <h3>${item.title}</h3>
-                    <p style="color: var(--gray); margin-top: 1rem;">${item.desc}</p>
-                </div>
-            `).join('');
-        }
-
-        function renderEvents() {
-            const container = document.getElementById('events-container');
-            container.innerHTML = appData.events.map(item => `
-                <div class="event-item reveal">
-                    <div class="event-date">
-                        <span class="event-month">${item.month}</span>
-                        <span>${item.day}</span>
-                    </div>
-                    <div class="event-details">
+        async function fetchAndRenderPublicData() {
+            // Fetch and Render Activities
+            const activitiesSnap = await getDocs(collection(db, 'activities'));
+            let activitiesHTML = '';
+            activitiesSnap.forEach(doc => {
+                const item = doc.data();
+                activitiesHTML += `
+                    <div class="activity-card reveal active">
+                        <i class="fa-solid ${item.icon} activity-icon"></i>
                         <h3>${item.title}</h3>
-                        <p>${item.desc}</p>
-                        <p style="margin-top: 5px; font-size: 0.8rem; color: var(--secondary);">${item.location}</p>
-                    </div>
-                </div>
-            `).join('');
+                        <p style="color: var(--gray); margin-top: 1rem;">${item.desc}</p>
+                    </div>`;
+            });
+            document.getElementById('activities-container').innerHTML = activitiesHTML || '<p>No activities found.</p>';
+
+            // Fetch and Render Events
+            const eventsSnap = await getDocs(collection(db, 'events'));
+            let eventsHTML = '';
+            eventsSnap.forEach(doc => {
+                const item = doc.data();
+                eventsHTML += `
+                    <div class="event-item reveal active">
+                        <div class="event-date">
+                            <span class="event-month">${item.month}</span>
+                            <span>${item.day}</span>
+                        </div>
+                        <div class="event-details">
+                            <h3>${item.title}</h3>
+                            <p>${item.desc}</p>
+                            <p style="margin-top: 5px; font-size: 0.8rem; color: var(--secondary);">${item.location}</p>
+                        </div>
+                    </div>`;
+            });
+            document.getElementById('events-container').innerHTML = eventsHTML || '<p>No upcoming events.</p>';
+
+            // Fetch and Render Excoom
+            const excoomSnap = await getDocs(collection(db, 'excoom'));
+            let excoomHTML = '';
+            excoomSnap.forEach(doc => {
+                const item = doc.data();
+                excoomHTML += `
+                    <div class="member-card reveal active">
+                        <div class="member-avatar">${item.initials}</div>
+                        <div class="member-role">${item.role}</div>
+                        <h3>${item.name}</h3>
+                        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;">${item.year}</p>
+                    </div>`;
+            });
+            document.getElementById('excoom-container').innerHTML = excoomHTML || '<p>No committee members found.</p>';
         }
 
-        function renderExcoom() {
-            const container = document.getElementById('excoom-container');
-            container.innerHTML = appData.excoom.map(item => `
-                <div class="member-card reveal">
-                    <div class="member-avatar">${item.initials}</div>
-                    <div class="member-role">${item.role}</div>
-                    <h3>${item.name}</h3>
-                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;">${item.year}</p>
-                </div>
-            `).join('');
-        }
+        fetchAndRenderPublicData();
+    </script>
 
-        // Initialize Content
-        renderActivities();
-        renderEvents();
-        renderExcoom();
-
+    <script>
         // --- UI INTERACTIONS ---
         
         // Mobile Menu Toggle
@@ -861,4 +832,3 @@
     </script>
 </body>
 </html>
-
