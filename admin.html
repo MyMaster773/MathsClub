@@ -7,7 +7,6 @@
     
     <link rel="stylesheet" href="https://fontsource.org/files/inter/400.css">
     <link rel="stylesheet" href="https://fontsource.org/files/inter/600.css">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -24,320 +23,188 @@
             --sidebar-width: 260px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        aside {
-            width: var(--sidebar-width);
-            background-color: var(--primary);
-            color: white;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem;
-            z-index: 100;
-        }
-
-        .brand {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: white;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            color: #94a3b8;
-            text-decoration: none;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background-color: rgba(255,255,255,0.1);
-            color: white;
-        }
-
-        .nav-item i { width: 20px; text-align: center; }
-
-        .sidebar-footer {
-            margin-top: auto;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 1rem;
-        }
-
-        /* Main Content */
-        main {
-            margin-left: var(--sidebar-width);
-            flex: 1;
-            padding: 2rem;
-            width: calc(100% - var(--sidebar-width));
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        h1 { font-size: 1.8rem; color: var(--primary); }
-
-        .btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary { background-color: var(--secondary); color: white; }
-        .btn-primary:hover { background-color: #2563eb; }
-        
-        .btn-danger { background-color: var(--danger); color: white; }
-        .btn-danger:hover { background-color: #dc2626; }
-
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
-        .btn-outline:hover { background: var(--surface); border-color: var(--text-light); }
-
-        /* Cards & Tables */
-        .card {
-            background: var(--surface);
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .data-table th {
-            text-align: left;
-            padding: 1rem;
-            border-bottom: 2px solid var(--bg);
-            color: var(--text-light);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .data-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-            vertical-align: middle;
-        }
-
-        .data-table tr:last-child td { border-bottom: none; }
-
-        .action-btn {
-            padding: 0.4rem;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            color: var(--text-light);
-            background: transparent;
-            transition: 0.2s;
-        }
-
-        .action-btn:hover { color: var(--danger); background: #fee2e2; }
-        .action-btn.edit:hover { color: var(--secondary); background: #dbeafe; }
-
-        /* Badges */
-        .badge {
-            padding: 0.25rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .badge-blue { background: #dbeafe; color: #1e40af; }
-        .badge-green { background: #d1fae5; color: #065f46; }
-
-        /* Modal */
-        .modal-overlay {
+        /* --- Login Modal Styles --- */
+        #login-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none;
+            background: var(--primary);
+            display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(2px);
+            z-index: 9999;
         }
 
-        .modal {
+        .login-card {
             background: white;
-            padding: 2rem;
-            border-radius: 12px;
+            padding: 2.5rem;
+            border-radius: 16px;
             width: 100%;
-            max-width: 500px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 400px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .login-card h2 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .login-card p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .login-group {
+            text-align: left;
             margin-bottom: 1.5rem;
         }
 
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 600; }
-        .form-group input, .form-group textarea, .form-group select {
+        .login-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .login-group input {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid var(--border);
-            border-radius: 6px;
-            font-family: inherit;
-        }
-        .form-group input:focus { outline: 2px solid var(--secondary); border-color: transparent; }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 2rem;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.2s;
         }
 
-        /* Views */
-        .view-section { display: none; animation: fadeIn 0.3s ease; }
+        .login-group input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .login-btn:hover { background: #2563eb; }
+
+        /* --- Main Dashboard Styles (Hidden by default) --- */
+        #admin-content { display: none; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-main); min-height: 100vh; }
+
+        aside { width: var(--sidebar-width); background-color: var(--primary); color: white; position: fixed; height: 100vh; display: flex; flex-direction: column; padding: 1.5rem; z-index: 100; }
+        .brand { font-size: 1.25rem; font-weight: 700; margin-bottom: 3rem; display: flex; align-items: center; gap: 0.5rem; color: white; }
+        .nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; color: #94a3b8; text-decoration: none; border-radius: 8px; margin-bottom: 0.5rem; transition: all 0.2s; cursor: pointer; }
+        .nav-item:hover, .nav-item.active { background-color: rgba(255,255,255,0.1); color: white; }
+        .nav-item i { width: 20px; text-align: center; }
+        .sidebar-footer { margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; }
+
+        main { margin-left: var(--sidebar-width); flex: 1; padding: 2rem; width: calc(100% - var(--sidebar-width)); }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        h1 { font-size: 1.8rem; color: var(--primary); }
+
+        .btn { padding: 0.6rem 1.2rem; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background-color: var(--secondary); color: white; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
+
+        .card { background: var(--surface); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 1.5rem; margin-bottom: 2rem; }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { text-align: left; padding: 1rem; border-bottom: 2px solid var(--bg); color: var(--text-light); font-size: 0.85rem; text-transform: uppercase; }
+        .data-table td { padding: 1rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        .action-btn { padding: 0.4rem; border-radius: 4px; border: none; cursor: pointer; color: var(--text-light); background: transparent; transition: 0.2s; }
+        .action-btn:hover { color: var(--danger); background: #fee2e2; }
+        .action-btn.edit:hover { color: var(--secondary); background: #dbeafe; }
+
+        .badge { padding: 0.25rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(2px); }
+        .modal { background: white; padding: 2rem; border-radius: 12px; width: 100%; max-width: 500px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 600; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 6px; }
+
+        .view-section { display: none; }
         .view-section.active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Responsive */
+        
         @media (max-width: 768px) {
             aside { transform: translateX(-100%); transition: 0.3s; }
             aside.open { transform: translateX(0); }
-            main { margin-left: 0; width: 100%; padding: 1rem; }
-            .mobile-toggle { display: block; }
+            main { margin-left: 0; width: 100%; }
         }
-        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; margin-right: 1rem; }
     </style>
 </head>
 <body>
 
-    <aside id="sidebar">
-        <div class="brand">
-            <i class="fa-solid fa-shapes"></i> Admin Panel
+    <div id="login-overlay">
+        <div class="login-card">
+            <i class="fa-solid fa-square-root-variable" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+            <h2>Admin Login</h2>
+            <p>Sigma Society Math Club Panel</p>
+            <form id="login-form">
+                <div class="login-group">
+                    <label>Username</label>
+                    <input type="text" id="admin-user" placeholder="Enter username" required>
+                </div>
+                <div class="login-group">
+                    <label>Password</label>
+                    <input type="password" id="admin-pass" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
         </div>
-        <nav>
-            <div class="nav-item active" onclick="switchView('activities')">
-                <i class="fa-solid fa-list-check"></i> Activities
-            </div>
-            <div class="nav-item" onclick="switchView('events')">
-                <i class="fa-regular fa-calendar-days"></i> Events
-            </div>
-            <div class="nav-item" onclick="switchView('excoom')">
-                <i class="fa-solid fa-users"></i> Excoom
-            </div>
-        </nav>
-        <div class="sidebar-footer">
-            <a href="index.html" class="nav-item" target="_blank">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> View Site
-            </a>
-        </div>
-    </aside>
+    </div>
 
-    <main>
-        <header>
-            <div style="display: flex; align-items: center;">
-                <i class="fa-solid fa-bars mobile-toggle" onclick="toggleSidebar()"></i>
+    <div id="admin-content">
+        <aside id="sidebar">
+            <div class="brand"><i class="fa-solid fa-shapes"></i> Admin Panel</div>
+            <nav>
+                <div class="nav-item active" onclick="switchView('activities')"><i class="fa-solid fa-list-check"></i> Activities</div>
+                <div class="nav-item" onclick="switchView('events')"><i class="fa-regular fa-calendar-days"></i> Events</div>
+                <div class="nav-item" onclick="switchView('excoom')"><i class="fa-solid fa-users"></i> Excoom</div>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="nav-item"><i class="fa-solid fa-arrow-up-right-from-square"></i> View Site</a>
+            </div>
+        </aside>
+
+        <main>
+            <header>
                 <h1 id="page-title">Activities Management</h1>
-            </div>
-            <button class="btn btn-primary" onclick="openModal()">
-                <i class="fa-solid fa-plus"></i> Add New
-            </button>
-        </header>
+                <button class="btn btn-primary" onclick="openModal()"><i class="fa-solid fa-plus"></i> Add New</button>
+            </header>
 
-        <section id="view-activities" class="view-section active">
-            <div class="card">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Icon</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th style="text-align: right;">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="activities-table-body">
-                        </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="view-events" class="view-section">
-            <div class="card">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Event Name</th>
-                            <th>Location</th>
-                            <th style="text-align: right;">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="events-table-body">
-                        </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="view-excoom" class="view-section">
-            <div class="card">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Member</th>
-                            <th>Role</th>
-                            <th>Year/Major</th>
-                            <th style="text-align: right;">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="excoom-table-body">
-                        </tbody>
-                </table>
-            </div>
-        </section>
-    </main>
+            <section id="view-activities" class="view-section active">
+                <div class="card"><table class="data-table"><thead><tr><th>Icon</th><th>Title</th><th>Description</th><th style="text-align: right;">Actions</th></tr></thead><tbody id="activities-table-body"></tbody></table></div>
+            </section>
+            <section id="view-events" class="view-section">
+                <div class="card"><table class="data-table"><thead><tr><th>Date</th><th>Event</th><th>Location</th><th style="text-align: right;">Actions</th></tr></thead><tbody id="events-table-body"></tbody></table></div>
+            </section>
+            <section id="view-excoom" class="view-section">
+                <div class="card"><table class="data-table"><thead><tr><th>Member</th><th>Role</th><th>Year</th><th style="text-align: right;">Actions</th></tr></thead><tbody id="excoom-table-body"></tbody></table></div>
+            </section>
+        </main>
+    </div>
 
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal">
-            <div class="modal-header">
-                <h3 id="modal-title">Add Item</h3>
-                <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeModal()"></i>
-            </div>
+            <div class="modal-header"><h3 id="modal-title">Add Item</h3><i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeModal()"></i></div>
             <form id="data-form">
-                <input type="hidden" id="item-id">
-                <input type="hidden" id="item-type">
-                <div id="form-fields">
-                    </div>
-                <div class="modal-actions">
+                <input type="hidden" id="item-id"><input type="hidden" id="item-type">
+                <div id="form-fields"></div>
+                <div style="display:flex; justify-content:flex-end; gap:1rem; margin-top:2rem;">
                     <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
@@ -349,7 +216,39 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-        // Your specific Firebase configuration
+        // Handle Custom Login
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = document.getElementById('admin-user').value;
+            const pass = document.getElementById('admin-pass').value;
+            const btn = e.target.querySelector('button');
+            
+            btn.innerText = "Verifying...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user, pass })
+                });
+
+                if (response.ok) {
+                    document.getElementById('login-overlay').style.display = 'none';
+                    document.getElementById('admin-content').style.display = 'flex';
+                    loadData();
+                } else {
+                    alert("Invalid Credentials");
+                    btn.innerText = "Sign In";
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                alert("Auth Error: " + err.message);
+                btn.innerText = "Sign In";
+                btn.disabled = false;
+            }
+        });
+
         const firebaseConfig = {
             apiKey: "AIzaSyD5McbOsegxh9wyx3J99-tPxHWIo2dSNEM",
             authDomain: "maths-club-12cdb.firebaseapp.com",
@@ -361,243 +260,72 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-
         let appData = { activities: [], events: [], excoom: [] };
         let currentView = 'activities';
 
-        // 1. Load Data from Firebase
         async function loadData() {
             appData = { activities: [], events: [], excoom: [] };
-            const types = ['activities', 'events', 'excoom'];
-            for (const type of types) {
-                const querySnapshot = await getDocs(collection(db, type));
-                querySnapshot.forEach((document) => {
-                    appData[type].push({ id: document.id, ...document.data() });
-                });
+            for (const type of ['activities', 'events', 'excoom']) {
+                const snap = await getDocs(collection(db, type));
+                snap.forEach(d => appData[type].push({ id: d.id, ...d.data() }));
             }
             renderCurrentView();
         }
-        
-        loadData();
 
-        // 2. Add or Edit Data
         document.getElementById('data-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const type = document.getElementById('item-type').value;
             const id = document.getElementById('item-id').value;
-            
             const newItem = {};
-            formData.forEach((value, key) => newItem[key] = value);
+            formData.forEach((v, k) => newItem[k] = v);
 
-            if (id) {
-                await updateDoc(doc(db, type, id), newItem);
-            } else {
-                await addDoc(collection(db, type), newItem);
-            }
+            if (id) await updateDoc(doc(db, type, id), newItem);
+            else await addDoc(collection(db, type), newItem);
             closeModal();
-            await loadData();
+            loadData();
         });
 
-        // 3. Delete Data
-        async function deleteItem(type, id) {
-            if(confirm('Delete this item?')) {
-                await deleteDoc(doc(db, type, id));
-                await loadData();
-            }
-        }
-
-        // --- Render Functions ---
-        function renderActivities() {
-            const tbody = document.getElementById('activities-table-body');
-            tbody.innerHTML = appData.activities.map(item => `
-                <tr>
-                    <td><i class="fa-solid ${item.icon}" style="color: var(--secondary); font-size: 1.2rem;"></i></td>
-                    <td style="font-weight: 600;">${item.title}</td>
-                    <td style="color: var(--text-light);">${item.desc}</td>
-                    <td style="text-align: right;">
-                        <button class="action-btn edit" onclick="editItem('activities', '${item.id}')"><i class="fa-solid fa-pen"></i></button>
-                        <button class="action-btn" onclick="deleteItem('activities', '${item.id}')"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function renderEvents() {
-            const tbody = document.getElementById('events-table-body');
-            tbody.innerHTML = appData.events.map(item => `
-                <tr>
-                    <td>
-                        <div style="font-weight:700; color:var(--primary);">${item.day}</div>
-                        <div style="font-size:0.8rem; color:var(--text-light); text-transform:uppercase;">${item.month}</div>
-                    </td>
-                    <td style="font-weight: 600;">${item.title}</td>
-                    <td style="color: var(--text-light);">${item.location}</td>
-                    <td style="text-align: right;">
-                        <button class="action-btn edit" onclick="editItem('events', '${item.id}')"><i class="fa-solid fa-pen"></i></button>
-                        <button class="action-btn" onclick="deleteItem('events', '${item.id}')"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function renderExcoom() {
-            const tbody = document.getElementById('excoom-table-body');
-            tbody.innerHTML = appData.excoom.map(item => `
-                <tr>
-                    <td>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <div style="width:35px; height:35px; background:var(--secondary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.8rem;">${item.initials}</div>
-                            <span style="font-weight: 600;">${item.name}</span>
-                        </div>
-                    </td>
-                    <td><span class="badge badge-blue">${item.role}</span></td>
-                    <td style="color: var(--text-light);">${item.year}</td>
-                    <td style="text-align: right;">
-                        <button class="action-btn edit" onclick="editItem('excoom', '${item.id}')"><i class="fa-solid fa-pen"></i></button>
-                        <button class="action-btn" onclick="deleteItem('excoom', '${item.id}')"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
+        window.deleteItem = async (type, id) => {
+            if(confirm('Delete?')) { await deleteDoc(doc(db, type, id)); loadData(); }
         }
 
         function renderCurrentView() {
-            if (currentView === 'activities') renderActivities();
-            if (currentView === 'events') renderEvents();
-            if (currentView === 'excoom') renderExcoom();
+            const bodies = {
+                activities: () => appData.activities.map(i => `<tr><td><i class="fa-solid ${i.icon}"></i></td><td style="font-weight:600">${i.title}</td><td>${i.desc}</td><td style="text-align:right"><button class="action-btn edit" onclick="editItem('activities','${i.id}')"><i class="fa-solid fa-pen"></i></button><button class="action-btn" onclick="deleteItem('activities','${i.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`).join(''),
+                events: () => appData.events.map(i => `<tr><td>${i.month} ${i.day}</td><td style="font-weight:600">${i.title}</td><td>${i.location}</td><td style="text-align:right"><button class="action-btn edit" onclick="editItem('events','${i.id}')"><i class="fa-solid fa-pen"></i></button><button class="action-btn" onclick="deleteItem('events','${i.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`).join(''),
+                excoom: () => appData.excoom.map(i => `<tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;background:var(--secondary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem">${i.initials}</div>${i.name}</div></td><td><span class="badge badge-blue">${i.role}</span></td><td>${i.year}</td><td style="text-align:right"><button class="action-btn edit" onclick="editItem('excoom','${i.id}')"><i class="fa-solid fa-pen"></i></button><button class="action-btn" onclick="deleteItem('excoom','${i.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('')
+            };
+            document.getElementById(`${currentView}-table-body`).innerHTML = bodies[currentView]();
         }
 
-        function switchView(viewName) {
-            currentView = viewName;
-            
-            // Update Sidebar
+        window.switchView = (view) => {
+            currentView = view;
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             event.currentTarget.classList.add('active');
-            
-            // Update Title
-            const titles = { 'activities': 'Activities Management', 'events': 'Events Calendar', 'excoom': 'Executive Committee' };
-            document.getElementById('page-title').innerText = titles[viewName];
-
-            // Toggle Sections
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(`view-${viewName}`).classList.add('active');
-
+            document.getElementById(`view-${view}`).classList.add('active');
             renderCurrentView();
+        }
+
+        window.openModal = (obj = null) => {
+            const overlay = document.getElementById('modal-overlay');
+            const fields = document.getElementById('form-fields');
+            overlay.style.display = 'flex';
+            document.getElementById('item-type').value = currentView;
+            document.getElementById('item-id').value = obj ? obj.id : '';
             
-            // Mobile sidebar close
-            if(window.innerWidth <= 768) {
-                document.getElementById('sidebar').classList.remove('open');
+            if(currentView === 'activities') {
+                fields.innerHTML = `<div class="form-group"><label>Title</label><input name="title" value="${obj?obj.title:''}" required></div><div class="form-group"><label>Icon (FA Class)</label><input name="icon" value="${obj?obj.icon:'fa-star'}"></div><div class="form-group"><label>Desc</label><textarea name="desc">${obj?obj.desc:''}</textarea></div>`;
+            } else if(currentView === 'events') {
+                fields.innerHTML = `<div class="form-group"><label>Month</label><input name="month" value="${obj?obj.month:'Jan'}"></div><div class="form-group"><label>Day</label><input type="number" name="day" value="${obj?obj.day:'1'}"></div><div class="form-group"><label>Title</label><input name="title" value="${obj?obj.title:''}" required></div><div class="form-group"><label>Location</label><input name="location" value="${obj?obj.location:''}"></div><div class="form-group"><label>Desc</label><textarea name="desc">${obj?obj.desc:''}</textarea></div>`;
+            } else {
+                fields.innerHTML = `<div class="form-group"><label>Name</label><input name="name" value="${obj?obj.name:''}" required></div><div class="form-group"><label>Role</label><input name="role" value="${obj?obj.role:''}" required></div><div class="form-group"><label>Initials</label><input name="initials" value="${obj?obj.initials:''}" maxlength="2"></div><div class="form-group"><label>Year</label><input name="year" value="${obj?obj.year:''}"></div>`;
             }
         }
 
-        function openModal(editItemObj = null) {
-            const modal = document.getElementById('modal-overlay');
-            const formFields = document.getElementById('form-fields');
-            const title = document.getElementById('modal-title');
-            const typeInput = document.getElementById('item-type');
-            const idInput = document.getElementById('item-id');
-            
-            modal.style.display = 'flex';
-            typeInput.value = currentView;
-            
-            let html = '';
-            
-            if (currentView === 'activities') {
-                title.innerText = editItemObj ? 'Edit Activity' : 'Add Activity';
-                idInput.value = editItemObj ? editItemObj.id : '';
-                html = `
-                    <div class="form-group">
-                        <label>Title</label>
-                        <input type="text" name="title" value="${editItemObj ? editItemObj.title : ''}" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Icon Class (FontAwesome)</label>
-                        <input type="text" name="icon" value="${editItemObj ? editItemObj.icon : 'fa-star'}" placeholder="e.g. fa-chalkboard-user">
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea name="desc" rows="3">${editItemObj ? editItemObj.desc : ''}</textarea>
-                    </div>
-                `;
-            } else if (currentView === 'events') {
-                title.innerText = editItemObj ? 'Edit Event' : 'Add Event';
-                idInput.value = editItemObj ? editItemObj.id : '';
-                html = `
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
-                        <div class="form-group">
-                            <label>Month</label>
-                            <input type="text" name="month" value="${editItemObj ? editItemObj.month : 'Jan'}" maxlength="3">
-                        </div>
-                        <div class="form-group">
-                            <label>Day</label>
-                            <input type="number" name="day" value="${editItemObj ? editItemObj.day : '1'}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Event Title</label>
-                        <input type="text" name="title" value="${editItemObj ? editItemObj.title : ''}" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Location & Time</label>
-                        <input type="text" name="location" value="${editItemObj ? editItemObj.location : ''}" placeholder="Room 101, 4pm">
-                    </div>
-                    <div class="form-group">
-                        <label>Short Description</label>
-                        <textarea name="desc" rows="2">${editItemObj ? editItemObj.desc : ''}</textarea>
-                    </div>
-                `;
-            } else if (currentView === 'excoom') {
-                title.innerText = editItemObj ? 'Edit Member' : 'Add Member';
-                idInput.value = editItemObj ? editItemObj.id : '';
-                html = `
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" name="name" value="${editItemObj ? editItemObj.name : ''}" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Role / Title</label>
-                        <input type="text" name="role" value="${editItemObj ? editItemObj.role : ''}" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Initials (for Avatar)</label>
-                        <input type="text" name="initials" value="${editItemObj ? editItemObj.initials : ''}" maxlength="2" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Year / Major</label>
-                        <input type="text" name="year" value="${editItemObj ? editItemObj.year : ''}">
-                    </div>
-                `;
-            }
-
-            formFields.innerHTML = html;
-        }
-
-        function editItem(type, id) {
-            const item = appData[type].find(i => i.id === id);
-            openModal(item);
-        }
-
-        function closeModal() {
-            document.getElementById('modal-overlay').style.display = 'none';
-        }
-
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-        }
-
-        // Close modal on outside click
-        document.getElementById('modal-overlay').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('modal-overlay')) closeModal();
-        });
-
-        // Attach functions to window so HTML inline events can access them
-        window.switchView = switchView;
-        window.openModal = openModal;
-        window.closeModal = closeModal;
-        window.editItem = editItem;
-        window.deleteItem = deleteItem;
-        window.toggleSidebar = toggleSidebar;
-
+        window.editItem = (type, id) => openModal(appData[type].find(i => i.id === id));
+        window.closeModal = () => document.getElementById('modal-overlay').style.display = 'none';
     </script>
 </body>
 </html>
