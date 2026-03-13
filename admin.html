@@ -223,7 +223,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-        // Notice: Firebase Storage imports are completely removed.
 
         const firebaseConfig = {
             apiKey: "AIzaSyD5McbOsegxh9wyx3J99-tPxHWIo2dSNEM",
@@ -310,7 +309,7 @@
             e.preventDefault();
             const submitBtn = document.getElementById('save-data-btn');
             const originalText = submitBtn.innerText;
-            submitBtn.innerText = "Uploading & Saving...";
+            submitBtn.innerText = "Processing...";
             submitBtn.disabled = true;
 
             const formData = new FormData(e.target);
@@ -327,19 +326,22 @@
             });
 
             try {
-                // --- IMGBB FREE IMAGE UPLOAD LOGIC ---
                 const fileInput = document.getElementById('image-upload');
+                
                 if (fileInput && fileInput.files.length > 0) {
                     const file = fileInput.files[0];
                     
-                    const imgData = new FormData();
-                    imgData.append("image", file);
+                    const base64Image = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result.split(',')[1]);
+                        reader.onerror = error => reject(error);
+                        reader.readAsDataURL(file);
+                    });
 
-                    const imgbbKey = "fc71161c591ffdf798100429dbbce9d7"; 
-                    
-                    const response = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbKey}`, {
-                        method: "POST",
-                        body: imgData
+                    const response = await fetch('/api/upload', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ image: base64Image })
                     });
                     
                     const result = await response.json();
@@ -347,17 +349,19 @@
                     if (result.success) {
                         newItem.imageUrl = result.data.url; 
                     } else {
-                        alert("Image upload failed: " + (result.error ? result.error.message : "Unknown error"));
+                        throw new Error(result.message || "Upload failed");
                     }
+                } else {
+                    newItem.imageUrl = document.getElementById('existing-image-url').value;
                 }
-                // ---------------------------------------
 
                 if (id) await updateDoc(doc(db, type, id), newItem);
                 else await addDoc(collection(db, type), newItem);
+                
                 closeModal();
                 loadData();
             } catch (error) {
-                alert("Error saving document: " + error.message);
+                alert("Error: " + error.message);
             } finally {
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
