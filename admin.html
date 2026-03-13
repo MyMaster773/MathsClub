@@ -189,7 +189,7 @@
             </header>
 
             <section id="view-activities" class="view-section active">
-                <div class="card"><table class="data-table"><thead><tr><th>Icon</th><th>Title</th><th>Description</th><th style="text-align: right;">Actions</th></tr></thead><tbody id="activities-table-body"></tbody></table></div>
+                <div class="card"><table class="data-table"><thead><tr><th>Icon/Image</th><th>Title</th><th>Description</th><th style="text-align: right;">Actions</th></tr></thead><tbody id="activities-table-body"></tbody></table></div>
             </section>
             <section id="view-events" class="view-section">
                 <div class="card"><table class="data-table"><thead><tr><th>Date</th><th>Event</th><th>Location</th><th style="text-align: right;">Actions</th></tr></thead><tbody id="events-table-body"></tbody></table></div>
@@ -209,10 +209,11 @@
             <form id="data-form">
                 <input type="hidden" id="item-id">
                 <input type="hidden" id="item-type">
+                <input type="hidden" id="existing-image-url" name="imageUrl">
                 <div id="form-fields"></div>
                 <div style="display:flex; justify-content:flex-end; gap:1rem; margin-top:2rem;">
                     <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="submit" class="btn btn-primary" id="save-data-btn">Save Changes</button>
                 </div>
             </form>
         </div>
@@ -222,6 +223,8 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        // New Storage Imports
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD5McbOsegxh9wyx3J99-tPxHWIo2dSNEM",
@@ -235,6 +238,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app); 
+        const storage = getStorage(app); // Storage initialized
 
         let appData = { activities: [], events: [], excoom: [] };
         let currentView = 'activities';
@@ -306,6 +310,11 @@
 
         document.getElementById('data-form').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const submitBtn = document.getElementById('save-data-btn');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Uploading & Saving...";
+            submitBtn.disabled = true;
+
             const formData = new FormData(e.target);
             const type = document.getElementById('item-type').value;
             const id = document.getElementById('item-id').value;
@@ -320,12 +329,25 @@
             });
 
             try {
+                // Image Upload Logic
+                const fileInput = document.getElementById('image-upload');
+                if (fileInput && fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const storageRef = ref(storage, `${type}/${Date.now()}_${file.name}`);
+                    await uploadBytes(storageRef, file);
+                    const downloadURL = await getDownloadURL(storageRef);
+                    newItem.imageUrl = downloadURL; 
+                }
+
                 if (id) await updateDoc(doc(db, type, id), newItem);
                 else await addDoc(collection(db, type), newItem);
                 closeModal();
                 loadData();
             } catch (error) {
                 alert("Error saving document: " + error.message);
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
             }
         });
 
@@ -343,7 +365,7 @@
         function renderCurrentView() {
             const bodies = {
                 activities: () => appData.activities.map(i => `<tr>
-                    <td><i class="fa-solid ${escapeHTML(i.icon)}"></i></td>
+                    <td>${i.imageUrl ? `<img src="${escapeHTML(i.imageUrl)}" style="width:40px; height:40px; object-fit:cover; border-radius:4px;">` : `<i class="fa-solid ${escapeHTML(i.icon)}"></i>`}</td>
                     <td style="font-weight:600">${escapeHTML(i.title)}</td>
                     <td>${escapeHTML(i.desc)}</td>
                     <td style="text-align:right">
@@ -362,7 +384,9 @@
                 
                 excoom: () => appData.excoom.map(i => `<tr>
                     <td><div style="display:flex;align-items:center;gap:10px">
-                        <div style="width:30px;height:30px;background:var(--secondary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem">${escapeHTML(i.initials)}</div>
+                        ${i.imageUrl 
+                            ? `<img src="${escapeHTML(i.imageUrl)}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;">` 
+                            : `<div style="width:30px;height:30px;background:var(--secondary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem">${escapeHTML(i.initials)}</div>`}
                         ${escapeHTML(i.name)}</div></td>
                     <td><span class="badge badge-blue">${escapeHTML(i.role)}</span></td>
                     <td>${escapeHTML(i.year)}</td>
@@ -394,12 +418,15 @@
             overlay.style.display = 'flex';
             document.getElementById('item-type').value = currentView;
             document.getElementById('item-id').value = obj ? obj.id : '';
+            // Store existing image URL so we don't overwrite it if a new image isn't selected
+            document.getElementById('existing-image-url').value = obj && obj.imageUrl ? obj.imageUrl : '';
             document.getElementById('modal-title').innerText = obj ? 'Edit Item' : 'Add Item';
             
             if(currentView === 'activities') {
                 fields.innerHTML = `
                     <div class="form-group"><label>Title</label><input name="title" value="${escapeHTML(obj?obj.title:'')}" required></div>
-                    <div class="form-group"><label>Icon (FA Class)</label><input name="icon" value="${escapeHTML(obj?obj.icon:'fa-star')}"></div>
+                    <div class="form-group"><label>Upload New Image</label><input type="file" id="image-upload" accept="image/*"></div>
+                    <div class="form-group"><label>Or use Icon (FA Class)</label><input name="icon" value="${escapeHTML(obj?obj.icon:'fa-star')}"></div>
                     <div class="form-group"><label>Desc</label><textarea name="desc">${escapeHTML(obj?obj.desc:'')}</textarea></div>`;
             } else if(currentView === 'events') {
                 fields.innerHTML = `
@@ -407,11 +434,13 @@
                         <div class="form-group"><label>Month</label><input name="month" value="${escapeHTML(obj?obj.month:'Jan')}"></div>
                         <div class="form-group"><label>Day</label><input type="number" name="day" value="${escapeHTML(obj?obj.day:'1')}"></div>
                     </div>
+                    <div class="form-group"><label>Upload Event Image</label><input type="file" id="image-upload" accept="image/*"></div>
                     <div class="form-group"><label>Title</label><input name="title" value="${escapeHTML(obj?obj.title:'')}" required></div>
                     <div class="form-group"><label>Location</label><input name="location" value="${escapeHTML(obj?obj.location:'')}"></div>
                     <div class="form-group"><label>Desc</label><textarea name="desc">${escapeHTML(obj?obj.desc:'')}</textarea></div>`;
             } else {
                 fields.innerHTML = `
+                    <div class="form-group"><label>Upload Member Photo</label><input type="file" id="image-upload" accept="image/*"></div>
                     <div class="form-group"><label>Name</label><input name="name" value="${escapeHTML(obj?obj.name:'')}" required></div>
                     <div class="form-group"><label>Role</label><input name="role" value="${escapeHTML(obj?obj.role:'')}" required></div>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
