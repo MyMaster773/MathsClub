@@ -291,6 +291,7 @@
         .activity-image-container {
             height: 200px;
             overflow: hidden;
+            position: relative;
         }
 
         .activity-content {
@@ -434,6 +435,7 @@
             width: 100%;
             aspect-ratio: 1 / 1;
             overflow: hidden;
+            position: relative;
         }
 
         .execom-caption {
@@ -722,10 +724,14 @@
                 let activitiesHTML = '';
                 activitiesSnap.forEach(doc => {
                     const item = doc.data();
+                    const mediaHTML = item.imageUrl 
+                        ? `<img src="${escapeHTML(item.imageUrl)}" alt="${escapeHTML(item.title)}" style="width: 100%; height: 100%; object-fit: cover;">`
+                        : `<i class="fa-solid ${escapeHTML(item.icon)}"></i>`;
+
                     activitiesHTML += `
                         <div class="activity-card">
                             <div class="activity-image-container" style="background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple)); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;">
-                                <i class="fa-solid ${escapeHTML(item.icon)}"></i>
+                                ${mediaHTML}
                             </div>
                             <div class="activity-content">
                                 <h3 class="activity-title">${escapeHTML(item.title)}</h3>
@@ -743,10 +749,14 @@
                 let eventsHTML = '';
                 eventsSnap.forEach(doc => {
                     const item = doc.data();
+                    const mediaHTML = item.imageUrl
+                        ? `<img src="${escapeHTML(item.imageUrl)}" alt="${escapeHTML(item.title)}" style="width: 100%; height: 100%; object-fit: cover;">`
+                        : `<i class="fa-regular fa-calendar-days"></i>`;
+
                     eventsHTML += `
                         <div class="event-card">
                             <div class="event-image-container" style="background: var(--light-bg); display:flex; align-items:center; justify-content:center; color: var(--navy-blue); font-size: 3.5rem;">
-                                <i class="fa-regular fa-calendar-days"></i>
+                                ${mediaHTML}
                                 <div class="event-date-badge">${escapeHTML(item.month)} ${escapeHTML(item.day)}</div>
                             </div>
                             <div class="event-content">
@@ -768,10 +778,14 @@
                 let excoomHTML = '';
                 excoomSnap.forEach(doc => {
                     const item = doc.data();
+                    const mediaHTML = item.imageUrl
+                        ? `<img src="${escapeHTML(item.imageUrl)}" alt="${escapeHTML(item.name)}" style="width: 100%; height: 100%; object-fit: cover;">`
+                        : `${escapeHTML(item.initials)}`;
+
                     excoomHTML += `
                         <div class="execom-card">
                             <div class="execom-img-wrapper" style="background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple)); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: bold;">
-                                ${escapeHTML(item.initials)}
+                                ${mediaHTML}
                             </div>
                             <div class="execom-caption">
                                 <div style="font-weight:700; font-size:1.1rem;">${escapeHTML(item.name)}</div>
