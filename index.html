@@ -1,689 +1,695 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College Math Club | Math Society</title>
-    
-    <link rel="stylesheet" href="https://fontsource.org/files/inter/400.css">
-    <link rel="stylesheet" href="https://fontsource.org/files/inter/600.css">
-    <link rel="stylesheet" href="https://fontsource.org/files/playfair-display/700.css">
-    
+    <title>Maths Club</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <style>
+        /* Base Styles */
         :root {
-            --primary: #0f172a;
-            --secondary: #3b82f6;
-            --accent: #f59e0b;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --surface: #ffffff;
-            --font-main: 'Inter', sans-serif;
-            --font-heading: 'Playfair Display', serif;
-            --transition: all 0.3s ease;
+            --primary-blue: #4f5cd1;
+            --primary-purple: #7b4dfc;
+            --navy-blue: #1c3d7a;
+            --light-bg: #f5f8ff;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --border-color: #e2e8f0;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: var(--font-main);
-            color: var(--primary);
-            background-color: var(--light);
+            background-color: var(--white);
+            color: var(--text-dark);
             line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: var(--font-heading);
-            font-weight: 700;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        ul {
-            list-style: none;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 20px;
         }
 
-        .section-padding {
-            padding: 5rem 0;
-        }
-
+        /* Typography styles */
         .section-title {
-            text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .section-subtitle {
+            font-weight: 700;
             text-align: center;
-            color: var(--gray);
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 0.5rem;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 2rem;
-            background-color: var(--secondary);
-            color: white;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: var(--transition);
-            border: 2px solid transparent;
-            cursor: pointer;
+        .text-navy {
+            color: var(--navy-blue);
         }
 
-        .btn:hover {
-            background-color: transparent;
-            border-color: var(--secondary);
-            color: var(--secondary);
-            transform: translateY(-2px);
+        .text-white {
+            color: var(--white);
         }
 
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid white;
-            color: white;
+        .title-underline {
+            height: 4px;
+            width: 60px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-purple));
+            margin: 0 auto 3rem auto;
+            border-radius: 2px;
         }
 
-        .btn-outline:hover {
-            background-color: white;
-            color: var(--primary);
-        }
-
-        header {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        nav {
+        /* Navbar */
+        .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 80px;
+            padding: 20px 5%;
+            background-color: transparent;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 10px;
+            color: var(--white);
+            font-weight: 700;
         }
 
-        .logo i {
-            color: var(--secondary);
+        .logo h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: white; /* fallback for missing logo */
         }
 
         .nav-links {
+            list-style: none;
             display: flex;
-            gap: 2rem;
+            gap: 30px;
         }
 
-        .nav-link {
-            font-weight: 600;
-            color: var(--primary);
-            transition: var(--transition);
-            position: relative;
+        .nav-links li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--secondary);
-            transition: var(--transition);
+        .nav-links li a:hover {
+            color: #ffd166;
         }
 
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: none;
+        .menu-icon {
+            color: var(--white);
             cursor: pointer;
-            font-size: 1.5rem;
+            display: none;
         }
 
-        #hero {
-            height: 100vh;
-            background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
-            display: flex;
-            align-items: center;
+        /* Hero Section */
+        .hero {
             position: relative;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #3a4db2, #8b4bf6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
             overflow: hidden;
-            color: white;
-            padding-top: 80px;
+            color: var(--white);
         }
 
-        .hero-bg-pattern {
+        /* Floating Blobs */
+        .blob {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.1;
-            background-image: 
-                radial-gradient(circle at 20% 30%, var(--secondary) 0%, transparent 20%),
-                radial-gradient(circle at 80% 70%, var(--accent) 0%, transparent 20%);
-            z-index: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            filter: blur(8px);
+            z-index: 0;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        .blob-1 { width: 300px; height: 150px; top: 10%; left: 10%; transform: rotate(-15deg); }
+        .blob-2 { width: 250px; height: 250px; border-radius: 50%; top: 50%; right: 15%; animation-delay: -2s; }
+        .blob-3 { width: 200px; height: 100px; bottom: 20%; left: 20%; transform: rotate(20deg); animation-delay: -4s; }
+        .blob-4 { width: 150px; height: 150px; border-radius: 50%; top: 30%; left: 45%; animation-delay: -6s; }
+        .blob-5 { width: 400px; height: 150px; bottom: -5%; right: 10%; transform: rotate(-10deg); animation-delay: -8s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg) scale(1); }
+            100% { transform: translateY(-20px) rotate(5deg) scale(1.05); }
         }
 
         .hero-content {
             position: relative;
-            z-index: 2;
+            z-index: 10;
             max-width: 800px;
         }
 
-        .hero-content h1 {
+        .hero h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0;
+            line-height: 1.1;
+        }
+
+        .hero h1.highlight {
             font-size: 4rem;
+            color: #ffd166;
             margin-bottom: 1.5rem;
             line-height: 1.1;
         }
 
-        .hero-content p {
+        .hero p {
             font-size: 1.2rem;
             margin-bottom: 2.5rem;
             opacity: 0.9;
-            max-width: 600px;
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        #about {
-            background-color: white;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+        .btn-primary {
+            display: inline-flex;
             align-items: center;
+            gap: 10px;
+            background-color: var(--white);
+            color: var(--primary-blue);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .about-image {
-            background-color: var(--light);
-            border-radius: 20px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        
-        .math-shape {
-            width: 200px;
-            height: 200px;
-            border: 2px solid var(--secondary);
-            border-radius: 50%;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: var(--secondary);
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
         }
 
-        .math-shape::before {
-            content: '';
+        .arrow { font-size: 0.9rem; }
+
+        /* Mouse Scroll Icon */
+        .scroll-indicator {
             position: absolute;
-            width: 150px;
-            height: 150px;
-            border: 2px dashed var(--accent);
-            border-radius: 50%;
-            animation: spin 10s linear infinite;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
         }
 
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .mouse {
+            width: 26px;
+            height: 42px;
+            border: 2px solid var(--white);
+            border-radius: 15px;
+            position: relative;
         }
 
-        #activities {
-            background-color: var(--light);
+        .wheel {
+            width: 4px;
+            height: 8px;
+            background-color: var(--white);
+            border-radius: 2px;
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll 1.5s infinite;
+        }
+
+        @keyframes scroll {
+            0% { top: 6px; opacity: 1; }
+            100% { top: 20px; opacity: 0; }
+        }
+
+        /* About Section */
+        .about {
+            background-color: var(--light-bg);
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .about-text {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.15rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Activities Section */
+        .activities {
+            padding: 100px 20px;
+            background-color: var(--white);
         }
 
         .activities-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
         }
 
         .activity-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: var(--transition);
-            text-align: center;
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
         }
 
         .activity-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
-        .activity-icon {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 1.5rem;
+        .activity-image-container {
+            height: 200px;
+            overflow: hidden;
         }
 
-        #events {
-            background-color: white;
+        .activity-content {
+            padding: 25px;
         }
 
-        .event-item {
-            display: flex;
-            gap: 2rem;
-            padding: 2rem;
-            border-bottom: 1px solid #e2e8f0;
-            transition: var(--transition);
-            align-items: center;
-        }
-
-        .event-item:hover {
-            background-color: var(--light);
-        }
-
-        .event-date {
-            background-color: var(--primary);
-            color: white;
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            min-width: 100px;
-        }
-
-        .event-date span {
-            display: block;
-            font-weight: 700;
-            font-size: 1.5rem;
-            line-height: 1;
-        }
-
-        .event-month {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .event-details h3 {
-            margin-bottom: 0.5rem;
+        .activity-title {
             font-size: 1.25rem;
-        }
-
-        .event-details p {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        #excoom {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        #excoom .section-title {
-            color: white;
-        }
-
-        #excoom .section-subtitle {
-            color: rgba(255,255,255,0.7);
-        }
-
-        .excoom-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .member-card {
-            background: rgba(255,255,255,0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: var(--transition);
-        }
-
-        .member-card:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .member-avatar {
-            width: 100px;
-            height: 100px;
-            background-color: var(--secondary);
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            font-weight: 700;
-        }
-
-        .member-role {
-            color: var(--accent);
-            font-size: 0.9rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: var(--navy-blue);
         }
 
-        #contact {
-            background-color: white;
+        .activity-desc {
+            color: var(--text-light);
+            font-size: 0.95rem;
         }
 
-        .contact-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .contact-info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
-            padding: 1.5rem;
-            background: var(--light);
-            border-radius: 12px;
-            transition: var(--transition);
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .contact-info-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-icon-box {
-            width: 50px;
-            height: 50px;
-            background-color: var(--secondary);
-            color: white;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            flex-shrink: 0;
-        }
-
-        .contact-text h4 {
-            font-family: var(--font-main);
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-
-        .contact-text p {
-            color: var(--gray);
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-
-        .contact-form {
-            background: var(--light);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-family: var(--font-main);
-            font-size: 1rem;
-            transition: var(--transition);
-            background: white;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        footer {
-            background-color: var(--primary);
-            color: white;
-            padding: 2rem 0;
+        /* Loading Placeholder */
+        .loading-spinner {
+            grid-column: 1 / -1;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 40px;
+            font-size: 1.2rem;
+            color: var(--text-light);
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
+        /* Upcoming Events Section */
+        .events {
+            padding: 100px 20px;
+            background-color: var(--white);
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .event-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-image-container {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .event-date-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .event-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--navy-blue);
+        }
+
+        .event-info { margin-bottom: 15px; }
+
+        .event-location {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .event-desc {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Execom Section */
+        .execom {
+            padding: 100px 20px;
+            background-color: var(--light-bg);
+        }
+
+        .execom-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.05rem;
+            margin-bottom: 0;
+        }
+
+        .execom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .execom-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .execom-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
+        }
+
+        .execom-img-wrapper {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+        }
+
+        .execom-caption {
+            padding: 12px 14px;
+            font-size: 0.92rem;
+            font-weight: 500;
+            color: var(--navy-blue);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, #4459c2, #7348f3);
+            padding: 80px 20px 100px;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px 30px;
+            color: var(--white);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .instagram-link {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-icon {
+            display: inline-flex;
+            margin-bottom: 20px;
+        }
+
+        .contact-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .contact-card p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .menu-icon { display: block; z-index: 101; }
+            .nav-links {
+                position: fixed; top: 0; right: -100%; width: 250px; height: 100vh;
+                background-color: var(--navy-blue); flex-direction: column;
+                align-items: center; justify-content: center; transition: right 0.4s ease;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2); z-index: 100;
+            }
+            .nav-links.active { right: 0; }
         }
 
         @media (max-width: 768px) {
-            .nav-links {
-                position: absolute;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                flex-direction: column;
-                align-items: center;
-                padding: 2rem 0;
-                gap: 1.5rem;
-                transform: translateY(-150%);
-                transition: var(--transition);
-                box-shadow: 0 10px 10px rgba(0,0,0,0.05);
-            }
+            .hero h2 { font-size: 2.2rem; }
+            .hero h1.highlight { font-size: 2.8rem; }
+            .hero p { font-size: 1.05rem; }
+            .section-title { font-size: 2rem; }
+            .about, .activities, .contact { padding-top: 70px; padding-bottom: 70px; }
+            .blob-1 { width: 200px; height: 100px; }
+            .blob-2 { width: 150px; height: 150px; }
+            .blob-5 { width: 250px; height: 100px; }
+        }
 
-            .nav-links.active {
-                transform: translateY(0);
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .about-grid,
-            .contact-wrapper {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
+        @media (max-width: 480px) {
+            .hero h2 { font-size: 1.8rem; }
+            .hero h1.highlight { font-size: 2.2rem; }
+            .logo h1 { font-size: 1.2rem; }
+            .btn-primary { padding: 10px 24px; font-size: 1rem; }
+            .contact-card { padding: 30px 20px; }
         }
     </style>
 </head>
-<body>
 
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">
-                    <i class="fa-solid fa-square-root-variable"></i>
-                    Math Society
-                </a>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#about" class="nav-link">About</a></li>
-                    <li><a href="#activities" class="nav-link">Activities</a></li>
-                    <li><a href="#events" class="nav-link">Events</a></li>
-                    <li><a href="#excoom" class="nav-link">Excoom</a></li>
-                    <li><a href="#contact" class="nav-link">Contact</a></li>
-                </ul>
-                <div class="hamburger" id="hamburger">
-                    <i class="fa-solid fa-bars"></i>
-                </div>
-            </nav>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.jpg" alt="Maths Club ASIET Logo" class="logo-img" onerror="this.style.display='none'">
+            <h1>Maths Club ASIET</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#activities">Activities</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#execom">Execom</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="menu-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </div>
+    </nav>
+
+    <header class="hero" id="home">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+
+        <div class="hero-content">
+            <h2>Welcome to the</h2>
+            <h1 class="highlight">Maths Club ASIET</h1>
+            <p>Exploring the beauty of numbers, puzzles, and problem-solving!</p>
+            <a href="#activities" class="btn-primary">Join Us Today <span class="arrow">&#10095;</span></a>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
         </div>
     </header>
 
-    <section id="hero">
-        <div class="hero-bg-pattern"></div>
-        <div class="container hero-content reveal">
-            <h1>Where Numbers <br>Meet <span style="color: var(--accent);">Curiosity</span></h1>
-            <p>Join the premier mathematics club at our college. From solving complex equations to exploring real-world applications, we make math accessible and fun.</p>
-            <div class="hero-buttons">
-                <a href="#contact" class="btn">Join Us</a>
-                <a href="#events" class="btn btn-outline">Upcoming Events</a>
-            </div>
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title text-navy">About Us</h2>
+            <div class="title-underline"></div>
+            <p class="about-text">
+                The Maths Club is a vibrant community for students who are passionate about numbers and logical
+                thinking. We organize interactive workshops, exciting competitions, and collaborative problem-solving
+                sessions to sharpen mathematical skills and celebrate the elegance of mathematics in everyday life.
+            </p>
         </div>
     </section>
 
-    <section id="about" class="section-padding">
+    <section class="activities" id="activities">
         <div class="container">
-            <div class="about-grid">
-                <div class="about-text reveal">
-                    <h2 class="section-title" style="text-align: left;">Who We Are</h2>
-                    <p style="margin-bottom: 1rem;">The Math Society is a student-led organization dedicated to fostering a love for mathematics across all disciplines. We believe that math is not just a subject, but a language that describes the universe.</p>
-                    <p>Whether you are a math major or just curious about the logic behind the world, our doors are open. We provide a supportive community for peer tutoring, research collaboration, and social gatherings.</p>
-                    <ul style="margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <li><i class="fa-solid fa-check" style="color: var(--secondary); margin-right: 8px;"></i> Peer Tutoring</li>
-                        <li><i class="fa-solid fa-check" style="color: var(--secondary); margin-right: 8px;"></i> Research Seminars</li>
-                        <li><i class="fa-solid fa-check" style="color: var(--secondary); margin-right: 8px;"></i> Math Competitions</li>
-                        <li><i class="fa-solid fa-check" style="color: var(--secondary); margin-right: 8px;"></i> Social Mixers</li>
-                    </ul>
-                </div>
-                <div class="about-image reveal">
-                    <div class="math-shape">
-                        <i class="fa-solid fa-infinity"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            <h2 class="section-title text-navy">Our Activities</h2>
+            <div class="title-underline"></div>
 
-    <section id="activities" class="section-padding">
-        <div class="container">
-            <h2 class="section-title reveal">Our Activities</h2>
-            <p class="section-subtitle reveal">We keep things interesting with a mix of academic and social events.</p>
-            
             <div class="activities-grid" id="activities-container">
+                <div class="loading-spinner">Loading activities...</div>
             </div>
         </div>
     </section>
 
-    <section id="events" class="section-padding">
+    <section class="events" id="events">
         <div class="container">
-            <h2 class="section-title reveal">Upcoming Events</h2>
-            <p class="section-subtitle reveal">Mark your calendars. Don't miss out on the action.</p>
+            <h2 class="section-title text-navy">Upcoming Events</h2>
+            <div class="title-underline"></div>
 
-            <div class="events-list" id="events-container">
+            <div class="events-grid" id="events-container">
+                <div class="loading-spinner">Loading upcoming events...</div>
             </div>
         </div>
     </section>
 
-    <section id="excoom" class="section-padding">
+    <section class="execom" id="execom">
         <div class="container">
-            <h2 class="section-title reveal">Meet the Excoom</h2>
-            <p class="section-subtitle reveal">The Executive Committee leading the charge this year.</p>
-
-            <div class="excoom-grid" id="excoom-container">
+            <h2 class="section-title text-navy">Our Execom</h2>
+            <div class="title-underline"></div>
+            <p class="execom-subtitle">Meet the executive committee members who make the Maths Club thrive.</p>
+            <div class="execom-grid" id="execom-container">
+                <div class="loading-spinner">Loading Execom members...</div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="section-padding">
+    <section class="contact" id="contact">
         <div class="container">
-            <h2 class="section-title reveal">Get In Touch</h2>
-            <p class="section-subtitle reveal">Have questions or want to join? Reach out to us.</p>
-
-            <div class="contact-wrapper">
-                <div class="contact-info reveal">
-                    <a href="mailto:asietmathematicsclub1234@gmail.com" class="contact-info-item">
-                        <div class="contact-icon-box"><i class="fa-regular fa-envelope"></i></div>
-                        <div class="contact-text">
-                            <h4>Email Us</h4>
-                            <p>asietmathematicsclub1234@gmail.com</p>
-                        </div>
-                    </a>
-                    <a href="tel:+917736858318" class="contact-info-item">
-                        <div class="contact-icon-box"><i class="fa-solid fa-phone"></i></div>
-                        <div class="contact-text">
-                            <h4>Call Us</h4>
-                            <p>+91 7736858318</p>
-                        </div>
-                    </a>
-                    <a href="https://www.instagram.com/mathematicsclub_asiet/" target="_blank" class="contact-info-item">
-                        <div class="contact-icon-box"><i class="fa-brands fa-instagram"></i></div>
-                        <div class="contact-text">
-                            <h4>Follow Us</h4>
-                            <p>@mathematicsclub_asiet</p>
-                        </div>
-                    </a>
+            <h2 class="section-title text-white">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                            </path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Email Us</h3>
+                    <p id="display-email">asietmathematicsclub1234@gmail.com</p>
                 </div>
-
-                <form class="contact-form reveal" id="contactForm">
-                    <h3 style="margin-bottom: 1.5rem; font-family: var(--font-main);">Send a Message</h3>
-                    <div class="form-group"><input type="text" placeholder="Your Name" required></div>
-                    <div class="form-group"><input type="email" placeholder="Your Email" required></div>
-                    <div class="form-group"><textarea rows="5" placeholder="Message" required></textarea></div>
-                    <button type="submit" class="btn" style="width: 100%;">Send Message</button>
-                </form>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3>Call Us</h3>
+                    <p id="display-phone">+91 7736858318</p>
+                </div>
+                <a href="https://www.instagram.com/mathematicsclub_asiet/" target="_blank" class="contact-card instagram-link"
+                    id="display-instagram-link">
+                    <div class="contact-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </div>
+                    <h3>Follow Us</h3>
+                    <p id="display-instagram-handle">@mathematicsclub_asiet</p>
+                </a>
             </div>
         </div>
     </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Math Society Math Club. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getFirestore, collection, getDocs, query, limit } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
+        // Mobile Menu Toggle Logic
+        const menuIcon = document.querySelector('.menu-icon');
+        const navLinks = document.querySelector('.nav-links');
+        const links = document.querySelectorAll('.nav-links li a');
+
+        menuIcon.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyD5McbOsegxh9wyx3J99-tPxHWIo2dSNEM",
             authDomain: "maths-club-12cdb.firebaseapp.com",
@@ -708,6 +714,7 @@
 
         async function fetchAndRenderPublicData() {
             try {
+                // 1. Fetch & Render Activities
                 const activitiesRef = collection(db, 'activities');
                 const activitiesQuery = query(activitiesRef, limit(6));
                 const activitiesSnap = await getDocs(activitiesQuery);
@@ -716,14 +723,19 @@
                 activitiesSnap.forEach(doc => {
                     const item = doc.data();
                     activitiesHTML += `
-                        <div class="activity-card reveal active">
-                            <i class="fa-solid ${escapeHTML(item.icon)} activity-icon"></i>
-                            <h3>${escapeHTML(item.title)}</h3>
-                            <p style="color: var(--gray); margin-top: 1rem;">${escapeHTML(item.desc)}</p>
+                        <div class="activity-card">
+                            <div class="activity-image-container" style="background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple)); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;">
+                                <i class="fa-solid ${escapeHTML(item.icon)}"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h3 class="activity-title">${escapeHTML(item.title)}</h3>
+                                <p class="activity-desc">${escapeHTML(item.desc)}</p>
+                            </div>
                         </div>`;
                 });
-                document.getElementById('activities-container').innerHTML = activitiesHTML || '<p>No activities found.</p>';
+                document.getElementById('activities-container').innerHTML = activitiesHTML || '<p style="text-align:center; grid-column: 1/-1;">No activities found.</p>';
 
+                // 2. Fetch & Render Events
                 const eventsRef = collection(db, 'events');
                 const eventsQuery = query(eventsRef, limit(4));
                 const eventsSnap = await getDocs(eventsQuery);
@@ -732,20 +744,23 @@
                 eventsSnap.forEach(doc => {
                     const item = doc.data();
                     eventsHTML += `
-                        <div class="event-item reveal active">
-                            <div class="event-date">
-                                <span class="event-month">${escapeHTML(item.month)}</span>
-                                <span>${escapeHTML(item.day)}</span>
+                        <div class="event-card">
+                            <div class="event-image-container" style="background: var(--light-bg); display:flex; align-items:center; justify-content:center; color: var(--navy-blue); font-size: 3.5rem;">
+                                <i class="fa-regular fa-calendar-days"></i>
+                                <div class="event-date-badge">${escapeHTML(item.month)} ${escapeHTML(item.day)}</div>
                             </div>
-                            <div class="event-details">
-                                <h3>${escapeHTML(item.title)}</h3>
-                                <p>${escapeHTML(item.desc)}</p>
-                                <p style="margin-top: 5px; font-size: 0.8rem; color: var(--secondary);">${escapeHTML(item.location)}</p>
+                            <div class="event-content">
+                                <h3 class="event-title">${escapeHTML(item.title)}</h3>
+                                <div class="event-info">
+                                    <span class="event-location"><i class="fa-solid fa-location-dot" style="margin-right:5px; color:var(--primary-blue);"></i> ${escapeHTML(item.location)}</span>
+                                </div>
+                                <p class="event-desc">${escapeHTML(item.desc)}</p>
                             </div>
                         </div>`;
                 });
-                document.getElementById('events-container').innerHTML = eventsHTML || '<p>No upcoming events.</p>';
+                document.getElementById('events-container').innerHTML = eventsHTML || '<p style="text-align:center; grid-column: 1/-1;">No upcoming events.</p>';
 
+                // 3. Fetch & Render Execom
                 const excoomRef = collection(db, 'excoom');
                 const excoomQuery = query(excoomRef, limit(15));
                 const excoomSnap = await getDocs(excoomQuery);
@@ -754,14 +769,18 @@
                 excoomSnap.forEach(doc => {
                     const item = doc.data();
                     excoomHTML += `
-                        <div class="member-card reveal active">
-                            <div class="member-avatar">${escapeHTML(item.initials)}</div>
-                            <div class="member-role">${escapeHTML(item.role)}</div>
-                            <h3>${escapeHTML(item.name)}</h3>
-                            <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;">${escapeHTML(item.year)}</p>
+                        <div class="execom-card">
+                            <div class="execom-img-wrapper" style="background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple)); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: bold;">
+                                ${escapeHTML(item.initials)}
+                            </div>
+                            <div class="execom-caption">
+                                <div style="font-weight:700; font-size:1.1rem;">${escapeHTML(item.name)}</div>
+                                <div style="color:var(--primary-blue); font-size:0.9rem; font-weight:600; margin-top:4px;">${escapeHTML(item.role)}</div>
+                                <div style="color:var(--text-light); font-size:0.8rem; margin-top:2px;">${escapeHTML(item.year)}</div>
+                            </div>
                         </div>`;
                 });
-                document.getElementById('excoom-container').innerHTML = excoomHTML || '<p>No committee members found.</p>';
+                document.getElementById('execom-container').innerHTML = excoomHTML || '<p style="text-align:center; grid-column: 1/-1;">No committee members found.</p>';
                 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -769,71 +788,6 @@
         }
 
         fetchAndRenderPublicData();
-    </script>
-
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-        const links = document.querySelectorAll('.nav-link');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        const revealElements = document.querySelectorAll('.reveal');
-
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            root: null,
-            threshold: 0.15
-        });
-
-        revealElements.forEach(el => {
-            revealObserver.observe(el);
-        });
-
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = contactForm.querySelector('button');
-            const originalText = btn.innerText;
-            
-            btn.innerText = 'Sending...';
-            btn.style.opacity = '0.7';
-            
-            setTimeout(() => {
-                btn.innerText = 'Message Sent!';
-                btn.style.backgroundColor = '#10b981';
-                contactForm.reset();
-                
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.style.backgroundColor = '';
-                    btn.style.opacity = '1';
-                }, 3000);
-            }, 1500);
-        });
     </script>
 </body>
 </html>
